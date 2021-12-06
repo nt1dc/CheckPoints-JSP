@@ -41,6 +41,7 @@ public class AreaCheckServlet extends HttpServlet {
             session.setAttribute("results", results);
             resp.getWriter().println(Helper.getTable(results));
         } catch (Exception e) {
+            e.printStackTrace();
             resp.sendError(400);
             resp.setStatus(400);
         }

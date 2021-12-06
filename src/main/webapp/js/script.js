@@ -1,19 +1,17 @@
-let answerValues = document.getElementById("answerValues"),
-    pointer = document.getElementById("pointer"),
-    pickedBtn = false,
-    X = 0,
+let X = 0,
     Y = 0,
-    R = 1,
-    rValues = [1.0, 1.5, 2.0, 2.5, 3.0],
+    R = 1
+const rValues = [1.0, 1.5, 2.0, 2.5, 3.0],
+    answerValues = document.getElementById("answerValues"),
+    pointer = document.getElementById("pointer"),
     arrayXBoxes = [].slice.call(document.querySelectorAll("div.by_x input")),
-    arrayRBoxes = [].slice.call(document.querySelectorAll("div.by_R input"));
+    arrayRBoxes = [].slice.call(document.querySelectorAll("div.by_R input")),
+    audio = new Audio('media/NNN.mp3');
 
-const audio = new Audio('media/NNN.mp3');
 oneBox(arrayXBoxes);
 oneBox(arrayRBoxes);
 window.onload = function () {
     try {
-
         let x = document.querySelector("#answerValues > tr:nth-child(1) > td:nth-child(1)").innerText;
         let y = document.querySelector("#answerValues > tr:nth-child(1) > td:nth-child(2)").innerText;
         let r = document.querySelector("#answerValues > tr:nth-child(1) > td:nth-child(3)").innerText;
@@ -116,6 +114,7 @@ function processSubmit() {
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             if (XMLHttpRequest.status === 400) {
+                console.log(textStatus)
                 pointer.style.fill = "yellow"
                 audio.play();
                 alert("Bad request")
@@ -127,26 +126,6 @@ function processSubmit() {
     })
 }
 
-function processSubmit2() {
-    let request = '?x=' + X + '&y=' + Y + '&r=' + R;
-    setPointer(X, Y, R);
-    fetch("/controller" + request, {
-        method: "POST",
-        headers: {"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"},
-    }).then(async function (response) {
-        if (response.status === 400) {
-            pointer.style.fill = "yellow"
-            await audio.play();
-            alert("Bad request")
-            if (confirm("Прекратить весель?")) {
-                audio.pause();
-            }
-        } else {
-            console.log(response.text());
-            return response.json();
-        }
-    }).then(makeTable)
-}
 
 
 function makeTable(serverAnswer) {

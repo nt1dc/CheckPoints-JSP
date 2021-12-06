@@ -67,9 +67,6 @@ public class Result implements Serializable {
         this.result = result;
     }
 
-
-
-
     public Date getResultTime() {
         return resultTime;
     }

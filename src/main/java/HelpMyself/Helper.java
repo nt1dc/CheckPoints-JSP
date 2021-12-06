@@ -2,9 +2,7 @@ package HelpMyself;
 
 import Model.Result;
 import Model.Results;
-
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class Helper {
@@ -15,7 +13,7 @@ public class Helper {
     }
 
     public static boolean checkDataValidation(double x, double y, double r) {
-        if (rValues.contains(r) && (-2 < x && x < 2) && (-5 <= y && y <= 5)) {
+        if (rValues.contains(r) && (-2 <= x && x <= 2) && (-5 <= y && y <= 5)) {
             return true;
         }
         return false;
